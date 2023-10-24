@@ -8,8 +8,8 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "prepare": "husky install",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "format:fix": "prettier --write ./src"
+    "lint": "eslint . *.{js,css,ts,tsx,jsx} --report-unused-disable-directives --max-warnings 0",
+    "format:fix": "prettier --write *.{js,css,ts,tsx,jsx}"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -21,9 +21,8 @@
     }
   },
   "lint-staged": {
-    ".ts": [
-      "npm run format:fix",
-      "git add"
+    "*.{js,css,ts,tsx,jsx}": [
+      "npm run format:fix"
     ]
   },
   "devDependencies": {
