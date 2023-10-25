@@ -11,10 +11,6 @@
     "lint": "eslint . *.{js,css,ts,tsx,jsx} --report-unused-disable-directives --max-warnings 0",
     "format:fix": "prettier --write *.{js,css,ts,tsx,jsx}"
   },
-  "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
@@ -24,6 +20,11 @@
     "*.{js,css,ts,tsx,jsx}": [
       "npm run format:fix"
     ]
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.11.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
