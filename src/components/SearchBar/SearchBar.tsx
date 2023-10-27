@@ -5,10 +5,12 @@ import './SearchBar.css';
 
 interface SearchBarProps {
   setResults: (results: Person[]) => void;
+  setLoadingState: (isLoading: boolean) => void;
 }
 
 interface SearchBarState {
   input: string;
+  isLoading: boolean;
 }
 
 class SearchBar extends Component<SearchBarProps, SearchBarState> {
@@ -16,10 +18,12 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
     super(props);
     this.state = {
       input: '',
+      isLoading: false,
     };
   }
 
   fetchData = (value: string) => {
+    this.props.setLoadingState(true);
     fetch('https://jsonplaceholder.typicode.com/users')
       .then((response) => response.json())
       .then((json) => {
@@ -30,7 +34,10 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
             user.name.toLowerCase().includes(value.toLowerCase())
           );
         });
-        this.props.setResults(results);
+        setTimeout(() => {
+          this.props.setResults(results);
+          this.props.setLoadingState(false);
+        }, 500);
       });
   };
 
