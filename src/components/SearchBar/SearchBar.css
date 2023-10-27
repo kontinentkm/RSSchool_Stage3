@@ -25,3 +25,9 @@ input:focus {
 #search-icon {
   color: royalblue;
 }
+
+.search-button {
+  font-size: 1rem;
+  margin-left: 5px;
+  padding: 5px;
+}
