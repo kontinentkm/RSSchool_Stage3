@@ -23,6 +23,9 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
   }
 
   fetchData = (value: string) => {
+    if (this.state.input === 'error') {
+      throw new Error('You entered "error"!');
+    }
     this.props.setLoadingState(true);
     fetch('https://jsonplaceholder.typicode.com/users')
       .then((response) => response.json())
@@ -43,6 +46,7 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
 
   handleChange = (value: string) => {
     this.setState({ input: value });
+    localStorage.setItem('searchInput', value);
   };
 
   handleSearch = () => {
@@ -56,6 +60,13 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
   };
 
   componentDidMount() {
+    console.log('To see the error type "error and run the search"');
+    const savedInput = localStorage.getItem('searchInput');
+    if (savedInput) {
+      this.setState({ input: savedInput }, () => {
+        this.handleSearch();
+      });
+    }
     this.fetchData('');
   }
 
