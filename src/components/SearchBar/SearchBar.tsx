@@ -60,7 +60,9 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
   };
 
   componentDidMount() {
-    console.log('To see the error type "error and run the search"');
+    console.log(
+      'To see the error type "error", run the search and reload the page'
+    );
     const savedInput = localStorage.getItem('searchInput');
     if (savedInput) {
       this.setState({ input: savedInput }, () => {
