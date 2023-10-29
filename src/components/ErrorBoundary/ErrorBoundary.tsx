@@ -32,13 +32,20 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     console.error(errorInfo);
   }
 
+  handleFixErrorClick = () => {
+    localStorage.clear();
+    window.location.reload();
+  };
+
   render(): ReactNode {
     if (this.state.hasError) {
       return (
         <div>
           <h1>Something went wrong</h1>
           {this.state.error && <p>Error: {this.state.error.message}</p>}
-          <button className="fix-button">Fix the error</button>
+          <button className="fix-button" onClick={this.handleFixErrorClick}>
+            Fix the error
+          </button>
         </div>
       );
     }
