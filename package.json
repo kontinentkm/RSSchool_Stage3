@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "prepare": "husky install",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
-    "format:fix": "prettier src --write"
+    "format:fix": "prettier . --write"
   },
   "husky": {
     "hooks": {
@@ -17,7 +17,7 @@
     }
   },
   "lint-staged": {
-    "*.{js,css,ts,tsx,jsx}": [
+    ".": [
       "npm run format:fix"
     ]
   },
