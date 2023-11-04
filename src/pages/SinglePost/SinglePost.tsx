@@ -6,6 +6,8 @@ export const singlePostLoader = async ({ request, params }) => {
   const { data } = await axios.get(
     `https://jsonplaceholder.typicode.com/posts/${params.id}`
   );
+
+  // console.log(data);
   return data;
 };
 

@@ -8,16 +8,14 @@ export default function Pagination({ postsPerPage, totalPosts, paginate }) {
   }
 
   return (
-    <div>
-      <ul className="pagination">
-        {pageNumbers.map((number) => (
-          <li className="page-number" key={number}>
-            <button className="page-btn" onClick={() => paginate(number)}>
-              {number}
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <ul className="pagination">
+      {pageNumbers.map((number) => (
+        <li className="page-number" key={number}>
+          <button className="page-btn" onClick={() => paginate(number)}>
+            {number}
+          </button>
+        </li>
+      ))}
+    </ul>
   );
 }

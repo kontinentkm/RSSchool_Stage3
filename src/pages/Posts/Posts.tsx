@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import './Posts.css';
 import Pagination from '../../components/Pagination/Pagination';
@@ -31,15 +31,21 @@ const Posts = () => {
 
   return (
     <div className="posts-page">
-      <h1 className="posts-title">Posts page</h1>
+      <div className="posts-page-posts">
+        <h1 className="posts-title">Posts page</h1>
 
-      <PostsList posts={currentPost} loading={loading} />
+        <PostsList posts={currentPost} loading={loading} />
 
-      <Pagination
-        postsPerPage={postsPerPage}
-        totalPosts={posts.length}
-        paginate={paginate}
-      />
+        <Pagination
+          postsPerPage={postsPerPage}
+          totalPosts={posts.length}
+          paginate={paginate}
+        />
+      </div>
+
+      <div className="posts-page-single-post">
+        <Outlet />
+      </div>
     </div>
   );
 };

@@ -9,16 +9,17 @@ export const router = createBrowserRouter([
     path: '/',
     element: <Layout />,
     errorElement: <ErrorPage />,
-
     children: [
       {
-        path: 'posts',
         element: <Posts />,
-      },
-      {
-        path: 'posts/:id',
-        element: <SinglePost />,
-        loader: singlePostLoader,
+        path: 'posts',
+        children: [
+          {
+            element: <SinglePost />,
+            path: ':id',
+            loader: singlePostLoader,
+          },
+        ],
       },
     ],
   },
