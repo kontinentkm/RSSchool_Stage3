@@ -1,0 +1,16 @@
+.header {
+  padding: 10px 0;
+  background-color: rgb(212, 206, 199);
+  display: flex;
+  justify-content: center;
+}
+
+.nav-item {
+  margin: 0 10px;
+  text-align: center;
+  text-decoration: none;
+}
+
+nav-item:visited {
+  color: inherit;
+}
