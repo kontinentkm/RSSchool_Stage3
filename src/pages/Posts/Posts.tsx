@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import './Posts.css';
 import Pagination from '../../components/Pagination/Pagination';
 import PostsList from '../../components/PostsList/PostsList';
+import Search from '../../components/Search/Search';
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
@@ -12,15 +13,28 @@ const Posts = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(7);
 
-  useEffect(() => {
-    const getPosts = async () => {
-      setLoading(true);
-      const res = await axios.get('https://jsonplaceholder.typicode.com/posts');
-      setPosts(res.data);
-      setLoading(false);
-    };
+  const getPosts = async (inputValue) => {
+    setLoading(true);
+    const res = await axios.get('https://jsonplaceholder.typicode.com/posts');
+    const data = res.data;
+    const results = data.filter((post) => {
+      return (
+        post &&
+        post.title &&
+        post.title.toLowerCase().includes(inputValue.toLowerCase())
+      );
+    });
 
-    getPosts();
+    setPosts(results);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    const savedInput = localStorage.getItem('searchInput');
+    console.log(savedInput);
+    if (savedInput) {
+      getPosts(savedInput);
+    } else getPosts('');
   }, []);
 
   const lastPostIndex = currentPage * postsPerPage;
@@ -29,9 +43,15 @@ const Posts = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  const handleSearch = (inputValue) => {
+    getPosts(inputValue);
+  };
+
   return (
     <div className="posts-page">
       <div className="posts-page-posts">
+        <Search handleSearch={handleSearch} />
+
         <h1 className="posts-title">Posts page</h1>
 
         <PostsList posts={currentPost} loading={loading} />
