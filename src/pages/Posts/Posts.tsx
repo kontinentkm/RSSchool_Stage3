@@ -1,11 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from 'axios';
-import { Link, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import './Posts.css';
 import Pagination from '../../components/Pagination/Pagination';
 import PostsList from '../../components/PostsList/PostsList';
 import Search from '../../components/Search/Search';
+import './Posts.css';
+import { Post } from '../../../Types';
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
@@ -13,11 +13,11 @@ const Posts = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(7);
 
-  const getPosts = async (inputValue) => {
+  const getPosts = async (inputValue: string) => {
     setLoading(true);
     const res = await axios.get('https://jsonplaceholder.typicode.com/posts');
     const data = res.data;
-    const results = data.filter((post) => {
+    const results = data.filter((post: Post) => {
       return (
         post &&
         post.title &&
@@ -31,7 +31,6 @@ const Posts = () => {
 
   useEffect(() => {
     const savedInput = localStorage.getItem('searchInput');
-    console.log(savedInput);
     if (savedInput) {
       getPosts(savedInput);
     } else getPosts('');
@@ -41,9 +40,9 @@ const Posts = () => {
   const firstPostIndex = lastPostIndex - postsPerPage;
   const currentPost = posts.slice(firstPostIndex, lastPostIndex);
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-  const handleSearch = (inputValue) => {
+  const handleSearch = (inputValue: string) => {
     getPosts(inputValue);
   };
 

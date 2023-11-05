@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { PostsListProps } from '../../../Types';
 import './PostsList.css';
 
-export default function PostsList({ posts, loading }) {
+export default function PostsList({ posts, loading }: PostsListProps) {
   if (loading) {
     return <h2>Loading ...</h2>;
   }

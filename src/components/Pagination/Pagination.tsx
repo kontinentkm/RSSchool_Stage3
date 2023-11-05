@@ -1,6 +1,11 @@
 import './Pagination.css';
+import PaginationProps from '../../../Types';
 
-export default function Pagination({ postsPerPage, totalPosts, paginate }) {
+const Pagination: React.FC<PaginationProps> = ({
+  postsPerPage,
+  totalPosts,
+  paginate,
+}) => {
   const pageNumbers = [];
 
   for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
@@ -18,4 +23,6 @@ export default function Pagination({ postsPerPage, totalPosts, paginate }) {
       ))}
     </ul>
   );
-}
+};
+
+export default Pagination;

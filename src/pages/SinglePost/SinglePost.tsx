@@ -1,18 +1,18 @@
 import axios from 'axios';
-import { Link, useLoaderData } from 'react-router-dom';
+import { Link, LoaderFunction, useLoaderData } from 'react-router-dom';
+import { Post } from '../../../Types';
 import './SinglePost.css';
 
-export const singlePostLoader = async ({ request, params }) => {
+export const singlePostLoader: LoaderFunction = async ({ params }) => {
   const { data } = await axios.get(
     `https://jsonplaceholder.typicode.com/posts/${params.id}`
   );
 
-  // console.log(data);
   return data;
 };
 
 const SinglePost = () => {
-  const post = useLoaderData();
+  const post: Post = useLoaderData();
 
   return (
     <div className="single-post-page">

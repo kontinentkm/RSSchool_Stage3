@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { SearchProps } from '../../../Types';
 import './Search.css';
 
-export default function Search({ handleSearch }) {
+export default function Search({ handleSearch }: SearchProps) {
   const [inputValue, setInputValue] = useState('');
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
     localStorage.setItem('searchInput', event.target.value);
   };
