@@ -1,0 +1,8 @@
+.posts-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.post-item {
+  padding: 5px;
+}
