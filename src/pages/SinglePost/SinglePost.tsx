@@ -12,7 +12,7 @@ export const singlePostLoader: LoaderFunction = async ({ params }) => {
 };
 
 const SinglePost = () => {
-  const post: Post = useLoaderData();
+  const post: Post = useLoaderData() as Post;
 
   return (
     <div className="single-post-page">
