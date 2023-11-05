@@ -6,13 +6,13 @@ import SinglePost, { singlePostLoader } from '../pages/SinglePost/SinglePost';
 
 export const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/RSSchool_Stage3/dist/',
     element: <Layout />,
     errorElement: <ErrorPage />,
     children: [
       {
         element: <Posts />,
-        path: 'posts',
+        path: '/RSSchool_Stage3/dist/posts',
         children: [
           {
             element: <SinglePost />,

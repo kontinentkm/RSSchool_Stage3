@@ -10,7 +10,7 @@ export default function ErrorPage() {
       <Header />
       <div className="error-page-main">
         <img src={img} alt="img" className="error-page-img" />
-        <Link className="error-back-btn" to="/">
+        <Link className="error-back-btn" to="/RSSchool_Stage3/dist/">
           Back
         </Link>
       </div>
