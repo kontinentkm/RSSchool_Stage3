@@ -7,13 +7,18 @@ export default function Search({ handleSearch }: SearchProps) {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
-    localStorage.setItem('searchInput', event.target.value);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       handleSearch(inputValue);
+      localStorage.setItem('searchInput', inputValue);
     }
+  };
+
+  const handleSearchClick = (inputValue: string) => {
+    handleSearch(inputValue);
+    localStorage.setItem('searchInput', inputValue);
   };
 
   return (
@@ -26,7 +31,9 @@ export default function Search({ handleSearch }: SearchProps) {
       />
       <button
         className="search-button"
-        onClick={() => handleSearch(inputValue)}
+        onClick={() => {
+          handleSearchClick(inputValue);
+        }}
       >
         Search
       </button>
