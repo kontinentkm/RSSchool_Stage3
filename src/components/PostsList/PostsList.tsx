@@ -8,6 +8,10 @@ export default function PostsList({ posts, loading }: PostsListProps) {
     return <h2>Loading ...</h2>;
   }
 
+  if (posts.length === 0) {
+    return <h2 className="no-posts">No posts found</h2>;
+  }
+
   return (
     <div className="posts-list">
       {posts.map((post, idx) => (

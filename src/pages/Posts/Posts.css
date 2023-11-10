@@ -12,3 +12,8 @@
 .posts-page-single-post {
   padding: 10px;
 }
+
+.posts-per-page-dropdown {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}

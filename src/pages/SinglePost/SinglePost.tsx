@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Link, LoaderFunction, useLoaderData } from 'react-router-dom';
+import { LoaderFunction, useLoaderData, useNavigate } from 'react-router-dom';
 import { Post } from '../../../Types';
 import './SinglePost.css';
 
@@ -13,14 +13,19 @@ export const singlePostLoader: LoaderFunction = async ({ params }) => {
 
 const SinglePost = () => {
   const post: Post = useLoaderData() as Post;
+  const navigate = useNavigate();
+
+  const handleBackClick = () => {
+    navigate('/RSSchool_Stage3/dist/posts');
+  };
 
   return (
     <div className="single-post-page">
-      <h1>Single Post Page</h1>
+      <button className="single-post-back-btn" onClick={handleBackClick}>
+        Close
+      </button>
 
-      <Link className="single-post-back-btn" to={'/posts'}>
-        Back
-      </Link>
+      <h1>Single Post Page</h1>
 
       <div className="single-page-block">
         <p>
