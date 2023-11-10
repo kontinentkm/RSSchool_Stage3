@@ -4,7 +4,6 @@ import './ErrorPage.css';
 import Header from '../../components/Header/Header';
 
 export default function ErrorPage() {
-  // const error = useRouteError();
   return (
     <div className="error-page">
       <Header />

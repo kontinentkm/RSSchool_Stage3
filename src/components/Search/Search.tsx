@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { SearchProps } from '../../../Types';
+import { useSearchContext } from './SearchContext';
 import './Search.css';
 
 export default function Search({ handleSearch }: SearchProps) {
-  const [inputValue, setInputValue] = useState('');
+  const { inputValue, setInputValue } = useSearchContext();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
