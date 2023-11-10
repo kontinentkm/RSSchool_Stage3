@@ -11,7 +11,7 @@ const Posts = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(7);
+  const [postsPerPage, setPostsPerPage] = useState(7);
 
   const getPosts = async (inputValue: string) => {
     setLoading(true);
@@ -52,6 +52,20 @@ const Posts = () => {
         <Search handleSearch={handleSearch} />
 
         <h1 className="posts-title">Posts page</h1>
+
+        <div className="posts-per-page-dropdown">
+          <label htmlFor="postsPerPage">Posts per page:</label>
+          <select
+            id="postsPerPage"
+            name="postsPerPage"
+            value={postsPerPage}
+            onChange={(e) => setPostsPerPage(Number(e.target.value))}
+          >
+            <option value={5}>5</option>
+            <option value={10}>10</option>
+            <option value={15}>15</option>
+          </select>
+        </div>
 
         <PostsList posts={currentPost} loading={loading} />
 
