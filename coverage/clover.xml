@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1699615048316" clover="3.2.0">
-  <project timestamp="1699615048316" name="All files">
-    <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0" elements="0" coveredelements="0" complexity="0" loc="0" ncloc="0" packages="0" files="0" classes="0"/>
+<coverage generated="1699695286215" clover="3.2.0">
+  <project timestamp="1699695286215" name="All files">
+    <metrics statements="19" coveredstatements="17" conditionals="2" coveredconditionals="2" methods="4" coveredmethods="3" elements="25" coveredelements="22" complexity="0" loc="19" ncloc="19" packages="1" files="1" classes="1"/>
+    <file name="SinglePost.tsx" path="C:\Users\Core\Desktop\Stage 3\RSSchool_Stage3\src\pages\SinglePost\SinglePost.tsx">
+      <metrics statements="19" coveredstatements="17" conditionals="2" coveredconditionals="2" methods="4" coveredmethods="3"/>
+      <line num="1" count="1" type="stmt"/>
+      <line num="2" count="1" type="stmt"/>
+      <line num="3" count="1" type="stmt"/>
+      <line num="5" count="1" type="stmt"/>
+      <line num="7" count="1" type="stmt"/>
+      <line num="8" count="2" type="stmt"/>
+      <line num="9" count="2" type="stmt"/>
+      <line num="10" count="2" type="stmt"/>
+      <line num="12" count="2" type="stmt"/>
+      <line num="13" count="1" type="stmt"/>
+      <line num="14" count="1" type="stmt"/>
+      <line num="15" count="1" type="stmt"/>
+      <line num="18" count="1" type="stmt"/>
+      <line num="21" count="0" type="stmt"/>
+      <line num="25" count="1" type="stmt"/>
+      <line num="28" count="2" type="stmt"/>
+      <line num="29" count="0" type="stmt"/>
+      <line num="32" count="2" type="stmt"/>
+      <line num="64" count="1" type="stmt"/>
+    </file>
   </project>
 </coverage>

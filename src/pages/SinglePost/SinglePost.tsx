@@ -1,19 +1,29 @@
 import axios from 'axios';
-import { LoaderFunction, useLoaderData, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Post } from '../../../Types';
 import './SinglePost.css';
 
-export const singlePostLoader: LoaderFunction = async ({ params }) => {
-  const { data } = await axios.get(
-    `https://jsonplaceholder.typicode.com/posts/${params.id}`
-  );
-
-  return data;
-};
-
 const SinglePost = () => {
-  const post: Post = useLoaderData() as Post;
+  const { id } = useParams();
+  const [post, setPost] = useState<Post | null>(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await axios.get(
+          `https://jsonplaceholder.typicode.com/posts/${id}`
+        );
+        setPost(data);
+      } catch (error) {
+        // Обработка ошибок, например, перенаправление на страницу ошибки
+        navigate('/error');
+      }
+    };
+
+    fetchData();
+  }, [id, navigate]);
 
   const handleBackClick = () => {
     navigate('/RSSchool_Stage3/dist/posts');
@@ -28,17 +38,24 @@ const SinglePost = () => {
       <h1>Single Post Page</h1>
 
       <div className="single-page-block">
-        <p>
-          <span>Post ID:</span>
-          {post.id}
-        </p>
-        <p>
-          <span>Post Title:</span> {post.title}
-        </p>
-        <p>
-          <span>Post Body:</span>
-          {post.body}
-        </p>
+        {post ? (
+          <>
+            <p className="post-id">
+              <span>Post ID:</span>
+              {post.id}
+            </p>
+            <p>
+              <span>Post Title:</span>
+              {post.title}
+            </p>
+            <p>
+              <span>Post Body:</span>
+              {post.body}
+            </p>
+          </>
+        ) : (
+          <p>Loading...</p>
+        )}
       </div>
     </div>
   );

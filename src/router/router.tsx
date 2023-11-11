@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import Layout from '../pages/Layout/Layout';
 import Posts from '../pages/Posts/Posts';
-import SinglePost, { singlePostLoader } from '../pages/SinglePost/SinglePost';
+import SinglePost from '../pages/SinglePost/SinglePost';
 
 export const router = createBrowserRouter([
   {
@@ -17,7 +17,6 @@ export const router = createBrowserRouter([
           {
             element: <SinglePost />,
             path: ':id',
-            loader: singlePostLoader,
           },
         ],
       },
