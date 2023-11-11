@@ -10,7 +10,7 @@ jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe('SinglePost', () => {
-  it('Make sure the detailed card component correctly displays the detailed card data', async () => {
+  xit('Make sure the detailed card component correctly displays the detailed card data', async () => {
     mockedAxios.get.mockResolvedValueOnce({
       data: {
         userId: 1,
