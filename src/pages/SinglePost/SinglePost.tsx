@@ -30,7 +30,7 @@ const SinglePost = () => {
   };
 
   return (
-    <div className="single-post-page">
+    <div className="single-post-page" data-testid="single-post-page">
       <button className="single-post-back-btn" onClick={handleBackClick}>
         Close
       </button>

@@ -9,7 +9,7 @@ import '@testing-library/jest-dom';
 jest.mock('axios');
 
 describe('Posts', () => {
-  xit('should display a message when no cards are present', async () => {
+  xit('Check that an appropriate message is displayed if no cards are present', async () => {
     const mockedAxios = axios as jest.Mocked<typeof axios>;
     mockedAxios.get.mockResolvedValueOnce({ data: [] });
 
