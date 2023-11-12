@@ -20,7 +20,7 @@
   "lint-staged": {
     ".": [
       "npm run format:fix",
-      "jest --bail --findRelatedTests"
+      "jest --bail"
     ]
   },
   "dependencies": {
