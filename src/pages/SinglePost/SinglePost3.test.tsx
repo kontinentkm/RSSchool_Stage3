@@ -21,9 +21,12 @@ describe('SinglePost', () => {
     });
 
     render(
-      <MemoryRouter initialEntries={['/posts/1']}>
+      <MemoryRouter initialEntries={['/RSSchool_Stage3/dist/posts/1']}>
         <Routes>
-          <Route path="/posts/:id" element={<SinglePost />} />
+          <Route
+            path="/RSSchool_Stage3/dist/posts/:id"
+            element={<SinglePost />}
+          />
         </Routes>
       </MemoryRouter>
     );
