@@ -9,7 +9,7 @@ beforeEach(() => {
 });
 
 describe('Search', () => {
-  xit('Check that the component retrieves the value from the local storage upon mounting', async () => {
+  it('Check that the component retrieves the value from the local storage upon mounting', async () => {
     localStorage.setItem('searchInput', 'testValue');
 
     render(

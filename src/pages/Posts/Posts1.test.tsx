@@ -9,7 +9,7 @@ import axios from 'axios';
 jest.mock('axios');
 
 describe('Posts', () => {
-  xit('Verify that the component renders the specified number of cards', async () => {
+  it('Verify that the component renders the specified number of cards', async () => {
     const mockedAxios = axios as jest.Mocked<typeof axios>;
     mockedAxios.get.mockResolvedValueOnce({
       data: [

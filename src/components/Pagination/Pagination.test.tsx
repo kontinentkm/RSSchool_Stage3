@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import Pagination from './Pagination';
 
 describe('Pagination', () => {
-  xit('Check navigation on button click', () => {
+  it('Check navigation on button click', () => {
     const paginateMock = jest.fn();
     const totalPosts = 20; // Задайте общее количество постов
 

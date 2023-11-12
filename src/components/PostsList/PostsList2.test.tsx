@@ -20,7 +20,7 @@ jest.mock('react-router-dom', () => ({
 }));
 
 describe('PostsList', () => {
-  xit('Validate that clicking on a card opens a detailed card component', async () => {
+  it('Validate that clicking on a card opens a detailed card component', async () => {
     render(
       <MemoryRouter initialEntries={['/']}>
         <Routes>

@@ -10,7 +10,7 @@ jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe('SinglePost', () => {
-  xit('Check that a loading indicator is displayed while fetching data', async () => {
+  it('Check that a loading indicator is displayed while fetching data', async () => {
     mockedAxios.get.mockResolvedValueOnce({
       data: {
         userId: 1,

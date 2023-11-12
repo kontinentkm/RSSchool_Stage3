@@ -15,7 +15,7 @@ const mockedPost = {
 };
 
 describe('SinglePost', () => {
-  xit('Check that clicking triggers an additional API call to fetch detailed information.', async () => {
+  it('Check that clicking triggers an additional API call to fetch detailed information.', async () => {
     (axios.get as jest.MockedFunction<typeof axios.get>).mockResolvedValueOnce({
       data: mockedPost,
     });

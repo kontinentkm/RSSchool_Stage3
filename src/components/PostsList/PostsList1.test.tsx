@@ -10,7 +10,7 @@ const mockedPosts = [
 ];
 
 describe('PostsList', () => {
-  xit('Ensure that the card component renders the relevant card data', () => {
+  it('Ensure that the card component renders the relevant card data', () => {
     render(
       <MemoryRouter>
         <PostsList posts={mockedPosts} loading={false} />

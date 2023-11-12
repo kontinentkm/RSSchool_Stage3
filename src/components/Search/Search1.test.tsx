@@ -4,7 +4,7 @@ import Search from './Search';
 import { SearchProvider } from './SearchContext';
 
 describe('Search', () => {
-  xit('Verify that clicking the Search button saves the entered value to the local storage', () => {
+  it('Verify that clicking the Search button saves the entered value to the local storage', () => {
     const localStorageMock = jest.spyOn(Storage.prototype, 'setItem');
 
     render(
