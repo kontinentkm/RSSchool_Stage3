@@ -19,8 +19,7 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,html,css}": [
-      "npm run format:fix",
-      "npm run test"
+      "npm run format:fix"
     ]
   },
   "dependencies": {

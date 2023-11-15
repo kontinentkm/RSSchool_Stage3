@@ -1,23 +1,25 @@
+// Search.js
 import React from 'react';
-import { SearchProps } from '../../../Types';
-import { useSearchContext } from './SearchContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSearchInput, selectSearchInput } from '../../features/searchSlice';
 import './Search.css';
 
-export default function Search({ handleSearch }: SearchProps) {
-  const { inputValue, setInputValue } = useSearchContext();
+export default function Search({ handleSearch }) {
+  const dispatch = useDispatch();
+  const inputValue = useSelector(selectSearchInput);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
+  const handleInputChange = (event) => {
+    dispatch(setSearchInput(event.target.value));
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       handleSearch(inputValue);
       localStorage.setItem('searchInput', inputValue);
     }
   };
 
-  const handleSearchClick = (inputValue: string) => {
+  const handleSearchClick = (inputValue) => {
     handleSearch(inputValue);
     localStorage.setItem('searchInput', inputValue);
   };

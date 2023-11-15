@@ -1,9 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
-import {
-  createAsyncThunk,
-  createEntityAdapter,
-  createSelector,
-} from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const fetchPosts = createAsyncThunk(
@@ -22,11 +17,9 @@ export const fetchPosts = createAsyncThunk(
   }
 );
 
-const postsAdapter = createEntityAdapter();
-
 const postsSlice = createSlice({
   name: 'posts',
-  initialState: postsAdapter.getInitialState({ loading: false }),
+  initialState: { posts: [], loading: false },
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -34,14 +27,13 @@ const postsSlice = createSlice({
         state.loading = true;
       })
       .addCase(fetchPosts.fulfilled, (state, action) => {
+        state.posts = action.payload;
         state.loading = false;
-        postsAdapter.setAll(state, action.payload);
       });
   },
 });
 
-export const { selectAll: selectPosts, selectById: selectPostById } =
-  postsAdapter.getSelectors((state) => state.posts);
+export const selectPosts = (state) => state.posts.posts;
 export const selectLoading = (state) => state.posts.loading;
 
 export default postsSlice.reducer;

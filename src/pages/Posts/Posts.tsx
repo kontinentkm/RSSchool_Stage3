@@ -1,10 +1,16 @@
-import { useEffect, useState } from 'react';
+// Posts.js
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useGetPostsQuery } from '../../api';
 import {
-  fetchPosts,
   selectPosts,
   selectLoading,
+  fetchPosts,
 } from '../../features/postsSlice';
+import {
+  selectPostsPerPage,
+  setPostsPerPage,
+} from '../../features/postsPerPageSlice';
 import Pagination from '../../components/Pagination/Pagination';
 import PostsList from '../../components/PostsList/PostsList';
 import Search from '../../components/Search/Search';
@@ -15,15 +21,17 @@ const Posts = () => {
   const dispatch = useDispatch();
   const posts = useSelector(selectPosts);
   const loading = useSelector(selectLoading);
+  const postsPerPage = useSelector(selectPostsPerPage);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(7);
+  const { data: apiPosts } = useGetPostsQuery(); // Используем RTK Query hook для получения данных
 
   useEffect(() => {
-    const savedInput = localStorage.getItem('searchInput');
-    const inputValue = savedInput || '';
-    dispatch(fetchPosts(inputValue));
-  }, [dispatch]);
+    if (apiPosts) {
+      dispatch(fetchPosts(apiPosts));
+    }
+  }, [dispatch, apiPosts]);
+
+  const [currentPage, setCurrentPage] = useState(1);
 
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
@@ -33,6 +41,10 @@ const Posts = () => {
 
   const handleSearch = (inputValue) => {
     dispatch(fetchPosts(inputValue));
+  };
+
+  const handlePostsPerPageChange = (value) => {
+    dispatch(setPostsPerPage(value));
   };
 
   return (
@@ -48,7 +60,7 @@ const Posts = () => {
             id="postsPerPage"
             name="postsPerPage"
             value={postsPerPage}
-            onChange={(e) => setPostsPerPage(Number(e.target.value))}
+            onChange={(e) => handlePostsPerPageChange(Number(e.target.value))}
             data-testid="postsPerPage"
           >
             <option value={5}>5</option>
