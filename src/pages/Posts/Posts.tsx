@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  selectPosts,
-  selectLoading,
-  fetchPosts,
-} from '../../features/postsSlice';
+  useGetPostsQuery, // Импортируем запрос из RTK Query
+} from '../../api'; // Импортируем экземпляр RTK Query
+
 import {
   selectPostsPerPage,
   setPostsPerPage,
@@ -17,13 +16,16 @@ import { Outlet } from 'react-router-dom';
 
 const Posts = () => {
   const dispatch = useDispatch();
-  const posts = useSelector(selectPosts);
-  const loading = useSelector(selectLoading);
+  const postsQuery = useGetPostsQuery(); // Используем запрос RTK Query
+
+  const loading = postsQuery.isLoading;
+  const posts = postsQuery.data || [];
   const postsPerPage = useSelector(selectPostsPerPage);
 
   useEffect(() => {
     const savedInput = localStorage.getItem('searchInput');
-    dispatch(fetchPosts(savedInput || ''));
+    // Вызываем запрос RTK Query с сохраненным вводом
+    postsQuery.refetch(savedInput || '');
   }, [dispatch]);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -35,7 +37,8 @@ const Posts = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const handleSearch = (inputValue) => {
-    dispatch(fetchPosts(inputValue));
+    // Вызываем запрос RTK Query с новым вводом
+    postsQuery.refetch(inputValue);
   };
 
   const handlePostsPerPageChange = (value) => {
