@@ -1,29 +1,23 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+// SinglePost.tsx
+import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useGetPostByIdQuery } from '../../api'; // Импортируем запрос RTK Query
 import { Post } from '../../../Types';
 import './SinglePost.css';
 
 const SinglePost = () => {
   const { id } = useParams();
-  const [post, setPost] = useState<Post | null>(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data } = await axios.get(
-          `https://jsonplaceholder.typicode.com/posts/${id}`
-        );
-        setPost(data);
-      } catch (error) {
-        // Обработка ошибок, например, перенаправление на страницу ошибки
-        navigate('/error');
-      }
-    };
+  // Используем запрос RTK Query
+  const { data: post, error } = useGetPostByIdQuery(id);
 
-    fetchData();
-  }, [id, navigate]);
+  useEffect(() => {
+    if (error) {
+      // Обработка ошибок, например, перенаправление на страницу ошибки
+      navigate('/error');
+    }
+  }, [error, navigate]);
 
   const handleBackClick = () => {
     navigate('/RSSchool_Stage3/dist/posts');
