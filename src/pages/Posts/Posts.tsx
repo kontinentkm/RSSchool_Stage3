@@ -1,7 +1,5 @@
-// Posts.js
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useGetPostsQuery } from '../../api';
 import {
   selectPosts,
   selectLoading,
@@ -23,13 +21,10 @@ const Posts = () => {
   const loading = useSelector(selectLoading);
   const postsPerPage = useSelector(selectPostsPerPage);
 
-  const { data: apiPosts } = useGetPostsQuery(); // Используем RTK Query hook для получения данных
-
   useEffect(() => {
-    if (apiPosts) {
-      dispatch(fetchPosts(apiPosts));
-    }
-  }, [dispatch, apiPosts]);
+    const savedInput = localStorage.getItem('searchInput');
+    dispatch(fetchPosts(savedInput || ''));
+  }, [dispatch]);
 
   const [currentPage, setCurrentPage] = useState(1);
 
