@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  useGetPostsQuery, // Импортируем запрос из RTK Query
-} from '../../api'; // Импортируем экземпляр RTK Query
-
+import { useGetPostsQuery } from '../../api';
 import {
   selectPostsPerPage,
   setPostsPerPage,
@@ -13,37 +10,48 @@ import PostsList from '../../components/PostsList/PostsList';
 import Search from '../../components/Search/Search';
 import './Posts.css';
 import { Outlet } from 'react-router-dom';
+import { setSearchInput } from '../../features/searchSlice';
+import { Post } from '../../types';
 
 const Posts = () => {
   const dispatch = useDispatch();
-  const postsQuery = useGetPostsQuery(); // Используем запрос RTK Query
-
+  const postsQuery = useGetPostsQuery();
   const loading = postsQuery.isLoading;
-  const posts = postsQuery.data || [];
   const postsPerPage = useSelector(selectPostsPerPage);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     const savedInput = localStorage.getItem('searchInput');
-    // Вызываем запрос RTK Query с сохраненным вводом
-    postsQuery.refetch(savedInput || '');
-  }, [dispatch]);
+    handleSearch(savedInput);
+  }, [postsQuery]);
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const filterPosts = (inputValue: string) => {
+    const data = postsQuery.data || [];
+    const results = data.filter((post: Post) => {
+      return (
+        post &&
+        post.title &&
+        post.title.toLowerCase().includes(inputValue.toLowerCase())
+      );
+    });
+    setPosts(results);
+  };
+
+  const handleSearch = (inputValue: string) => {
+    filterPosts(inputValue);
+    dispatch(setSearchInput(inputValue));
+  };
+
+  const handlePostsPerPageChange = (value: number) => {
+    dispatch(setPostsPerPage(value));
+  };
 
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
   const currentPost = posts.slice(firstPostIndex, lastPostIndex);
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-  const handleSearch = (inputValue) => {
-    // Вызываем запрос RTK Query с новым вводом
-    postsQuery.refetch(inputValue);
-  };
-
-  const handlePostsPerPageChange = (value) => {
-    dispatch(setPostsPerPage(value));
-  };
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
     <div className="posts-page">
@@ -67,13 +75,18 @@ const Posts = () => {
           </select>
         </div>
 
-        <PostsList posts={currentPost} loading={loading} />
-
-        <Pagination
-          postsPerPage={postsPerPage}
-          totalPosts={posts.length}
-          paginate={paginate}
-        />
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <>
+            <PostsList posts={currentPost} loading={loading} />
+            <Pagination
+              postsPerPage={postsPerPage}
+              totalPosts={posts.length}
+              paginate={paginate}
+            />
+          </>
+        )}
       </div>
 
       <div className="posts-page-single-post">

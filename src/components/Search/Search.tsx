@@ -19,7 +19,7 @@ export default function Search({ handleSearch }) {
     }
   };
 
-  const handleSearchClick = (inputValue) => {
+  const handleSearchClick = () => {
     handleSearch(inputValue);
     localStorage.setItem('searchInput', inputValue);
   };
@@ -32,12 +32,7 @@ export default function Search({ handleSearch }) {
         onChange={handleInputChange}
         onKeyPress={handleKeyPress}
       />
-      <button
-        className="search-button"
-        onClick={() => {
-          handleSearchClick(inputValue);
-        }}
-      >
+      <button className="search-button" onClick={handleSearchClick}>
         Search
       </button>
     </div>

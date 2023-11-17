@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import '@testing-library/jest-dom';
-import ErrorPage from '../ErrorPage/ErrorPage';
+import ErrorPage from '../src/pages/ErrorPage/ErrorPage';
 
 test('Ensure that the 404 page is displayed when navigating to an invalid route', () => {
   render(

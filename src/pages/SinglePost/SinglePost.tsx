@@ -1,23 +1,20 @@
-// SinglePost.tsx
 import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useGetPostByIdQuery } from '../../api'; // Импортируем запрос RTK Query
-import { Post } from '../../../Types';
+import { Post } from '../../types';
 import './SinglePost.css';
 
 const SinglePost = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // Используем запрос RTK Query
-  const { data: post, error } = useGetPostByIdQuery(id);
+  const { data: post, isError } = useGetPostByIdQuery(id);
 
   useEffect(() => {
-    if (error) {
-      // Обработка ошибок, например, перенаправление на страницу ошибки
+    if (isError) {
       navigate('/error');
     }
-  }, [error, navigate]);
+  }, [isError, navigate]);
 
   const handleBackClick = () => {
     navigate('/RSSchool_Stage3/dist/posts');

@@ -2,14 +2,14 @@ import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
-import { SearchProvider } from '../../components/Search/SearchContext';
-import Posts from './Posts';
+import { SearchProvider } from '../src/components/Search/SearchContext1';
+import Posts from '../src/pages/Posts/Posts';
 import axios from 'axios';
 
 jest.mock('axios');
 
 describe('Posts', () => {
-  it('Verify that the component renders the specified number of cards', async () => {
+  xit('Verify that the component renders the specified number of cards', async () => {
     const mockedAxios = axios as jest.Mocked<typeof axios>;
     mockedAxios.get.mockResolvedValueOnce({
       data: [

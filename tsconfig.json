@@ -18,6 +18,22 @@
     "jsx": "react-jsx",
     "types": ["jest", "@types/jest"]
   },
-  "include": ["src", "Types.tsx", "__mocks__"],
+  "include": [
+    "src",
+    "src/types.tsx",
+    "__mocks__",
+    "__tests__/PostsList1.test.tsx",
+    "__tests__/PostsList2.test.tsx",
+    "__tests__/PostsList3.test.tsx",
+    "__tests__/Search1.test.tsx",
+    "__tests__/Search2.test.tsx",
+    "__tests__/Posts1.test.tsx",
+    "__tests__/Posts2.test.tsx",
+    "__tests__/SinglePost1.test.tsx",
+    "__tests__/SinglePost2.test.tsx",
+    "__tests__/SinglePost3.test.tsx",
+    "__tests__/ErrorPage.test.tsx",
+    "__tests__/Pagination.test.tsx"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
