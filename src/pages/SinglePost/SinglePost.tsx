@@ -1,14 +1,13 @@
 import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useGetPostByIdQuery } from '../../api'; // Импортируем запрос RTK Query
-import { Post } from '../../types';
 import './SinglePost.css';
 
 const SinglePost = () => {
-  const { id } = useParams();
+  const { id } = useParams<{ id?: string }>();
   const navigate = useNavigate();
 
-  const { data: post, isError } = useGetPostByIdQuery(id);
+  const { data: post, isError } = useGetPostByIdQuery(Number(id));
 
   useEffect(() => {
     if (isError) {

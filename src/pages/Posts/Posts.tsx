@@ -19,11 +19,11 @@ const Posts = () => {
   const loading = postsQuery.isLoading;
   const postsPerPage = useSelector(selectPostsPerPage);
   const [currentPage, setCurrentPage] = useState(1);
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
     const savedInput = localStorage.getItem('searchInput');
-    handleSearch(savedInput);
+    handleSearch(savedInput || '');
   }, [postsQuery]);
 
   const filterPosts = (inputValue: string) => {
