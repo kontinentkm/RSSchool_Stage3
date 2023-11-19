@@ -10,14 +10,12 @@ import { useGetPostsQuery, useGetPostByIdQuery } from '../src/api';
 import { Post } from '../src/types';
 import '@testing-library/jest-dom';
 
-// Мокируем RTK Query
 jest.mock('../src/api', () => ({
   ...jest.requireActual('../src/api'),
   useGetPostsQuery: jest.fn(),
   useGetPostByIdQuery: jest.fn(),
 }));
 
-// Замокированные данные для теста
 const mockPosts: Post[] = [
   { id: 1, title: 'Post 1', userId: 1, body: 'Body 1' },
   { id: 2, title: 'Post 2', userId: 2, body: 'Body 2' },
@@ -26,16 +24,13 @@ const mockPosts: Post[] = [
 const mockPost: Post = { id: 1, title: 'Post 1', userId: 1, body: 'Body 1' };
 
 beforeEach(() => {
-  // Сброс моков между тестами
   jest.clearAllMocks();
 
-  // Мокируем результат запроса RTK Query
   (useGetPostsQuery as jest.Mock).mockReturnValue({
     data: mockPosts,
     isError: false,
   });
 
-  // Мокируем результат запроса RTK Query для SinglePost
   (useGetPostByIdQuery as jest.Mock).mockReturnValue({
     data: mockPost,
     isError: false,
@@ -43,11 +38,9 @@ beforeEach(() => {
 });
 
 test('Check that clicking triggers an additional API call to fetch detailed information', async () => {
-  // Подготавливаем моковый стор с использованием redux-mock-store
   const mockStore = configureMockStore<Record<string, never>>();
   const store: MockStoreEnhanced<Record<string, never>> = mockStore({});
 
-  // Рендерим компонент в памяти с использованием замокированных данных
   render(
     <Provider store={store}>
       <MemoryRouter initialEntries={['/']}>
@@ -62,11 +55,9 @@ test('Check that clicking triggers an additional API call to fetch detailed info
     </Provider>
   );
 
-  // Имитируем клик по первой карточке
   userEvent.click(screen.getByText(mockPosts[0].title));
 
   await waitFor(() => {
-    // Проверяем, что SinglePost отрендерен с правильными данными
     const postTitleElement = screen.getByText(mockPost.title);
     expect(postTitleElement).toBeInTheDocument();
   });

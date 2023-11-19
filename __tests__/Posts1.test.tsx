@@ -8,14 +8,12 @@ import { useGetPostsQuery } from '../src/api';
 import '@testing-library/jest-dom';
 import Posts from '../src/pages/Posts/Posts';
 
-// Мокируем RTK Query
 jest.mock('../src/api', () => ({
   ...jest.requireActual('../src/api'),
   useGetPostsQuery: jest.fn(),
   useGetPostByIdQuery: jest.fn(),
 }));
 
-// Замокированные данные для теста
 const mockPosts = [
   { id: 1, title: 'Post 1', userId: 1, body: 'Body 1' },
   { id: 2, title: 'Post 2', userId: 2, body: 'Body 2' },
@@ -28,20 +26,17 @@ interface RootState {
 }
 
 test('Verify that changing the posts per page updates the displayed posts', async () => {
-  // Мокируем результат запроса RTK Query
   (useGetPostsQuery as jest.Mock).mockReturnValue({
     data: mockPosts,
     isError: false,
     isLoading: false,
   });
 
-  // Подготавливаем моковый стор с использованием redux-mock-store
-  const mockStore = configureMockStore<RootState>(); // Указываем тип RootState
+  const mockStore = configureMockStore<RootState>();
   const store: MockStoreEnhanced<RootState> = mockStore({
     search: { inputValue: '' },
   });
 
-  // Рендерим компонент в памяти с использованием замокированных данных
   render(
     <Provider store={store}>
       <MemoryRouter initialEntries={['/posts']}>
@@ -52,7 +47,6 @@ test('Verify that changing the posts per page updates the displayed posts', asyn
     </Provider>
   );
 
-  // Имитируем изменение значения в селекторе
   userEvent.selectOptions(screen.getByTestId('postsPerPage'), '5');
   expect(screen.getByTestId('postsPerPage')).toHaveValue('5');
 });
