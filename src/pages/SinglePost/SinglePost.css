@@ -1,0 +1,10 @@
+.single-post-back-btn {
+  margin-top: 20px;
+  text-decoration: none;
+}
+
+.single-page-block {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
