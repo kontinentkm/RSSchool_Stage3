@@ -1,4 +1,4 @@
-// store.js
+// store.tsx
 import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from './rootReducer';
 import { api } from '../api';
@@ -9,4 +9,5 @@ const store = configureStore({
     getDefaultMiddleware().concat(api.middleware),
 });
 
+export type RootState = ReturnType<typeof rootReducer>;
 export default store;

@@ -1,3 +1,4 @@
+//rootReducer.tsx
 import { combineReducers } from '@reduxjs/toolkit';
 import { api } from '../api';
 import searchReducer from '../features/searchSlice';

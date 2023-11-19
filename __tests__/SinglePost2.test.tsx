@@ -1,53 +1,56 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import React from 'react';
+import { render, waitFor, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import axios from 'axios';
+import { Provider } from 'react-redux';
+import configureMockStore from 'redux-mock-store';
 import SinglePost from '../src/pages/SinglePost/SinglePost';
+import { useGetPostByIdQuery } from '../src/api';
 import '@testing-library/jest-dom';
-import '@testing-library/dom';
 
-jest.mock('axios');
+const mockStore = configureMockStore();
 
-const mockedAxios = axios as jest.Mocked<typeof axios>;
+// Мокируем RTK Query
+jest.mock('../src/api', () => ({
+  ...jest.requireActual('../src/api'),
+  useGetPostByIdQuery: jest.fn(),
+}));
 
-describe('SinglePost', () => {
-  xit('Make sure the detailed card component correctly displays the detailed card data', async () => {
-    mockedAxios.get.mockResolvedValueOnce({
-      data: {
-        userId: 1,
-        id: 1,
-        title: 'Test Post',
-        body: 'This is a test post.',
-      },
-    });
+const mockPost = { id: 1, title: 'Test Post', body: 'Test Body' };
 
-    render(
+beforeEach(() => {
+  // Сброс моков между тестами
+  jest.clearAllMocks();
+});
+
+test('Make sure the detailed card component correctly displays the detailed card data', async () => {
+  // Подготавливаем моковый стор с использованием redux-mock-store
+  const store = mockStore({
+    search: { inputValue: '' },
+    postsPerPage: 5,
+  });
+
+  // Мокируем результат запроса RTK Query
+  (useGetPostByIdQuery as jest.Mock).mockReturnValue({
+    data: mockPost,
+    isError: false,
+  });
+
+  // Рендерим компонент в памяти и используем MemoryRouter для предоставления параметра id
+  render(
+    <Provider store={store}>
       <MemoryRouter initialEntries={['/posts/1']}>
         <Routes>
           <Route path="/posts/:id" element={<SinglePost />} />
         </Routes>
       </MemoryRouter>
-    );
+    </Provider>
+  );
 
-    await waitFor(() => {
-      expect(screen.getByText('Single Post Page')).toBeInTheDocument();
-    });
+  await waitFor(() => {
+    const postTitleElement = screen.getByText('Test Post');
+    expect(postTitleElement).toBeInTheDocument();
 
-    const findPostID = () => {
-      const spanIDElement = screen.getByText('Post ID:');
-      return spanIDElement.nextSibling?.textContent || '';
-    };
-    expect(findPostID()).toBe('1');
-
-    const findPostTitle = () => {
-      const spanTitleElement = screen.getByText('Post Title:');
-      return spanTitleElement.nextSibling?.textContent || '';
-    };
-    expect(findPostTitle()).toBe('Test Post');
-
-    const findPostBody = () => {
-      const spanBodyElement = screen.getByText('Post Body:');
-      return spanBodyElement.nextSibling?.textContent || '';
-    };
-    expect(findPostBody()).toBe('This is a test post.');
+    const postBodyElement = screen.getByText('Test Body');
+    expect(postBodyElement).toBeInTheDocument();
   });
 });

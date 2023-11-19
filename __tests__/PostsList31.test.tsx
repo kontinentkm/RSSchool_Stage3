@@ -42,7 +42,7 @@ beforeEach(() => {
   });
 });
 
-test('Validate that clicking on a card opens a detailed card component', async () => {
+test('Check that clicking triggers an additional API call to fetch detailed information', async () => {
   // Подготавливаем моковый стор с использованием redux-mock-store
   const mockStore = configureMockStore<Record<string, never>>();
   const store: MockStoreEnhanced<Record<string, never>> = mockStore({});
@@ -65,7 +65,6 @@ test('Validate that clicking on a card opens a detailed card component', async (
   // Имитируем клик по первой карточке
   userEvent.click(screen.getByText(mockPosts[0].title));
 
-  // Ждем, пока SinglePost загрузится
   await waitFor(() => {
     // Проверяем, что SinglePost отрендерен с правильными данными
     const postTitleElement = screen.getByText(mockPost.title);

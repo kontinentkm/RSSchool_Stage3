@@ -1,31 +1,35 @@
 import React from 'react';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
 import Search from '../src/components/Search/Search';
-import { SearchProvider } from '../src/components/Search/SearchContext1';
 import '@testing-library/jest-dom';
+
+const mockStore = configureStore();
 
 beforeEach(() => {
   localStorage.clear();
 });
 
 describe('Search', () => {
-  xit('Check that the component retrieves the value from the local storage upon mounting', async () => {
+  it('Check that the component retrieves the value from the local storage upon mounting', async () => {
     localStorage.setItem('searchInput', 'testValue');
 
-    render(
-      <SearchProvider>
-        <Search handleSearch={() => {}} />
-      </SearchProvider>
-    );
-
-    fireEvent.click(screen.getByText('Search'));
-
-    await waitFor(
-      () => {
-        const input = screen.getByPlaceholderText('...') as HTMLInputElement;
-        expect(input.value).toBe('');
+    const store = mockStore({
+      search: {
+        inputValue: 'testValue',
       },
-      { timeout: 500 }
+    });
+
+    render(
+      <Provider store={store}>
+        <Search handleSearch={() => {}} />
+      </Provider>
     );
+
+    await waitFor(() => {
+      const input = screen.getByPlaceholderText('...') as HTMLInputElement;
+      expect(input.value).toBe('testValue');
+    });
   });
 });

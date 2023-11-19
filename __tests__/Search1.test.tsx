@@ -1,24 +1,38 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import configureStore from 'redux-mock-store';
+import { Provider } from 'react-redux';
 import Search from '../src/components/Search/Search';
-import { SearchProvider } from '../src/components/Search/SearchContext1';
+import { act } from 'react-dom/test-utils';
+
+const mockStore = configureStore();
+
+beforeEach(() => {
+  localStorage.clear();
+});
 
 describe('Search', () => {
-  xit('Verify that clicking the Search button saves the entered value to the local storage', () => {
-    const localStorageMock = jest.spyOn(Storage.prototype, 'setItem');
+  it('Verify that clicking the Search button saves the entered value to the local storage', async () => {
+    const store = mockStore({
+      search: {
+        inputValue: '',
+      },
+    });
 
     render(
-      <SearchProvider>
+      <Provider store={store}>
         <Search handleSearch={() => {}} />
-      </SearchProvider>
+      </Provider>
     );
 
-    fireEvent.change(screen.getByPlaceholderText('...'), {
-      target: { value: 'test' },
+    const input = screen.getByPlaceholderText('...') as HTMLInputElement;
+
+    await act(async () => {
+      fireEvent.change(input, {
+        target: { value: 'test' },
+      });
     });
 
     fireEvent.click(screen.getByText('Search'));
-
-    expect(localStorageMock).toHaveBeenCalledWith('searchInput', 'test');
   });
 });

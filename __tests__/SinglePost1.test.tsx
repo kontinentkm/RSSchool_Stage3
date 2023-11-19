@@ -1,37 +1,50 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import axios from 'axios';
+import { Provider } from 'react-redux';
+import configureMockStore from 'redux-mock-store';
 import SinglePost from '../src/pages/SinglePost/SinglePost';
+import { useGetPostByIdQuery } from '../src/api';
 import '@testing-library/jest-dom';
-import '@testing-library/dom';
 
-jest.mock('axios');
+const mockStore = configureMockStore();
 
-const mockedAxios = axios as jest.Mocked<typeof axios>;
+// Мокируем RTK Query
+jest.mock('../src/api', () => ({
+  ...jest.requireActual('../src/api'),
+  useGetPostByIdQuery: jest.fn(),
+}));
 
-describe('SinglePost', () => {
-  xit('Check that a loading indicator is displayed while fetching data', async () => {
-    mockedAxios.get.mockResolvedValueOnce({
-      data: {
-        userId: 1,
-        id: 1,
-        title: 'Test Post',
-        body: 'This is a test post.',
-      },
-    });
+beforeEach(() => {
+  // Сброс моков между тестами
+  jest.clearAllMocks();
+});
 
-    render(
+test('Check that a loading indicator is displayed while fetching data', async () => {
+  // Подготавливаем моковый стор с использованием redux-mock-store
+  const store = mockStore({
+    search: { inputValue: '' },
+    postsPerPage: 5,
+  });
+
+  // Мокируем результат запроса RTK Query
+  (useGetPostByIdQuery as jest.Mock).mockReturnValue({
+    data: null,
+    isError: false,
+  });
+
+  // Рендерим компонент в памяти и используем MemoryRouter для предоставления параметра id
+  render(
+    <Provider store={store}>
       <MemoryRouter initialEntries={['/posts/1']}>
         <Routes>
           <Route path="/posts/:id" element={<SinglePost />} />
         </Routes>
       </MemoryRouter>
-    );
+    </Provider>
+  );
 
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
-
-    await waitFor(() => {
-      expect(screen.queryByText('Loading...')).toBeNull();
-    });
-  });
+  // Проверяем, что текст "Loading..." отображается в начальном состоянии
+  const loadingElement = screen.getByText(/loading/i);
+  expect(loadingElement).toBeInTheDocument();
 });

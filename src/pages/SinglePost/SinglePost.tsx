@@ -1,3 +1,4 @@
+//singlePosts.tsx
 import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useGetPostByIdQuery } from '../../api'; // Импортируем запрос RTK Query

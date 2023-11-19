@@ -1,29 +1,53 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
-import { SearchProvider } from '../src/components/Search/SearchContext1';
-import Posts from '../src/pages/Posts/Posts';
-import axios from 'axios';
+import { MemoryRouter, Routes, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
+import { useGetPostsQuery } from '../src/api';
 import '@testing-library/jest-dom';
+import Posts from '../src/pages/Posts/Posts';
 
-jest.mock('axios');
+// Мокируем RTK Query
+jest.mock('../src/api', () => ({
+  ...jest.requireActual('../src/api'),
+  useGetPostsQuery: jest.fn(),
+  useGetPostByIdQuery: jest.fn(),
+}));
 
-describe('Posts', () => {
-  xit('Check that an appropriate message is displayed if no cards are present', async () => {
-    const mockedAxios = axios as jest.Mocked<typeof axios>;
-    mockedAxios.get.mockResolvedValueOnce({ data: [] });
+interface RootState {
+  search: {
+    inputValue: string;
+  };
+}
 
-    render(
-      <MemoryRouter>
-        <SearchProvider>
-          <Posts />
-        </SearchProvider>
+test('Check that an appropriate message is displayed if no cards are present', async () => {
+  // Мокируем результат запроса RTK Query с пустым массивом
+  (useGetPostsQuery as jest.Mock).mockReturnValue({
+    data: [],
+    isError: false,
+    isLoading: false,
+  });
+
+  // Подготавливаем моковый стор с использованием redux-mock-store
+  const mockStore = configureMockStore<RootState>(); // Указываем тип RootState
+  const store: MockStoreEnhanced<RootState> = mockStore({
+    search: { inputValue: '' },
+  });
+
+  // Рендерим компонент в памяти с использованием замокированных данных
+  render(
+    <Provider store={store}>
+      <MemoryRouter initialEntries={['/posts']}>
+        <Routes>
+          <Route path="/posts" element={<Posts />} />
+        </Routes>
       </MemoryRouter>
-    );
+    </Provider>
+  );
 
-    await waitFor(() => {
-      const noCardsMessage = screen.getByText('No posts found');
-      expect(noCardsMessage).toBeInTheDocument();
-    });
+  // Дожидаемся, пока компонент перерендерится
+  await waitFor(() => {
+    // Проверяем, что отображается сообщение о том, что постов не найдено
+    expect(screen.getByText('No posts found')).toBeInTheDocument();
   });
 });
