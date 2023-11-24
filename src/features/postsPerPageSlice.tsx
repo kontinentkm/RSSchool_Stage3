@@ -1,3 +1,4 @@
+//postsPerPageSlice.tsx
 import { createSlice } from '@reduxjs/toolkit';
 
 type RootState = {

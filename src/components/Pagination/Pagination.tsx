@@ -1,3 +1,4 @@
+//pagination.tsx
 import './Pagination.css';
 import { PaginationProps } from '../../types';
 
