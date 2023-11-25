@@ -5,13 +5,14 @@ import { Posts } from '@/components/Posts';
 import { getAllPosts } from '@/services/getPosts';
 import { Metadata } from 'next';
 import { useEffect, useState } from 'react';
+import { Post } from '@/types';
 
 export const metadata: Metadata = {
   title: 'Blog | Next App',
 };
 
 export default function Blog() {
-  const [posts, setPosts] = useState<any[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

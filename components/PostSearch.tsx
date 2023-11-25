@@ -2,9 +2,10 @@
 
 import { getPostsBySearch } from '@/services/getPosts';
 import { FormEventHandler, useState } from 'react';
+import { Post } from '@/types';
 
 type Props = {
-  onSearch: (value: any[]) => void;
+  onSearch: (value: Post[]) => void;
 };
 
 const PostSearch = ({ onSearch }: Props) => {

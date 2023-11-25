@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { Post } from '@/types';
 
 async function fetchPostsFromAPI() {
   const response = await fetch('https://jsonplaceholder.typicode.com/posts');
@@ -14,7 +15,7 @@ export async function GET(req: Request) {
 
   if (query) {
     currentPosts = await fetchPostsFromAPI();
-    currentPosts = currentPosts.filter((post) =>
+    currentPosts = currentPosts.filter((post: Post) =>
       post.title.toLowerCase().includes(query.toLowerCase())
     );
   } else {
