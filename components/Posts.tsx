@@ -1,3 +1,4 @@
+//components/Posts.tsx
 import Link from 'next/link';
 import { Post } from '@/types';
 

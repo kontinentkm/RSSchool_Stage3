@@ -14,8 +14,7 @@ const PostSearch = ({ onSearch }: Props) => {
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
-    const posts = await getPostsBySearch(search);
-
+    const { posts, totalPages } = await getPostsBySearch(search);
     onSearch(posts);
   };
 

@@ -1,3 +1,4 @@
+// api/posts/page.tsx
 import { NextResponse } from 'next/server';
 import { Post } from '@/types';
 
