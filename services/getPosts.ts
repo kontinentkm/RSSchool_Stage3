@@ -1,6 +1,7 @@
 // getPosts.tsx
 export const getAllPosts = async (page = 1, limit = 10) => {
-  const response = await fetch(`https://jsonplaceholder.typicode.com/posts`);
+  const response = await fetch(`/api/posts`);
+
   if (!response.ok) throw new Error('Unable to fetch posts.');
 
   const data = await response.json();
@@ -19,9 +20,7 @@ export const getPostsBySearch = async (
   page = 1,
   limit = 10
 ) => {
-  const response = await fetch(
-    `https://jsonplaceholder.typicode.com/posts?q=${search}`
-  );
+  const response = await fetch(`/api/posts?q=${search}`);
 
   if (!response.ok) throw new Error('Unable to fetch posts.');
 

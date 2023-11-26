@@ -1,6 +1,7 @@
 //components/Posts.tsx
 import Link from 'next/link';
 import { Post } from '@/types';
+import React from 'react';
 
 type Props = {
   posts: Post[];

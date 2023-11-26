@@ -8,6 +8,7 @@ import { getAllPosts } from '@/services/getPosts';
 import { Metadata } from 'next';
 import { useEffect, useState } from 'react';
 import { Post } from '@/types';
+import React from 'react';
 
 export const metadata: Metadata = {
   title: 'Blog | Next App',
