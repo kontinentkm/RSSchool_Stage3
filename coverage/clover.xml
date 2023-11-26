@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1700992182680" clover="3.2.0">
+  <project timestamp="1700992182680" name="All files">
+    <metrics statements="34" coveredstatements="33" conditionals="4" coveredconditionals="3" methods="12" coveredmethods="11" elements="50" coveredelements="47" complexity="0" loc="34" ncloc="34" packages="1" files="4" classes="4"/>
+    <file name="Navigation.tsx" path="C:\Users\Core\Desktop\Stage 3\RSSchool_Stage3\components\Navigation.tsx">
+      <metrics statements="8" coveredstatements="8" conditionals="2" coveredconditionals="1" methods="2" coveredmethods="2"/>
+      <line num="2" count="1" type="stmt"/>
+      <line num="3" count="1" type="stmt"/>
+      <line num="14" count="2" type="stmt"/>
+      <line num="15" count="2" type="stmt"/>
+      <line num="17" count="2" type="stmt"/>
+      <line num="20" count="6" type="stmt"/>
+      <line num="22" count="6" type="stmt"/>
+      <line num="36" count="1" type="stmt"/>
+    </file>
+    <file name="Pagination.tsx" path="C:\Users\Core\Desktop\Stage 3\RSSchool_Stage3\components\Pagination.tsx">
+      <metrics statements="10" coveredstatements="10" conditionals="2" coveredconditionals="2" methods="4" coveredmethods="4"/>
+      <line num="10" count="1" type="stmt"/>
+      <line num="11" count="3" type="stmt"/>
+      <line num="12" count="3" type="stmt"/>
+      <line num="13" count="3" type="stmt"/>
+      <line num="15" count="3" type="stmt"/>
+      <line num="17" count="15" type="stmt"/>
+      <line num="20" count="3" type="stmt"/>
+      <line num="22" count="15" type="stmt"/>
+      <line num="30" count="1" type="stmt"/>
+      <line num="39" count="1" type="stmt"/>
+    </file>
+    <file name="PostSearch.tsx" path="C:\Users\Core\Desktop\Stage 3\RSSchool_Stage3\components\PostSearch.tsx">
+      <metrics statements="11" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="3"/>
+      <line num="3" count="1" type="stmt"/>
+      <line num="4" count="1" type="stmt"/>
+      <line num="12" count="1" type="stmt"/>
+      <line num="13" count="1" type="stmt"/>
+      <line num="15" count="1" type="stmt"/>
+      <line num="16" count="1" type="stmt"/>
+      <line num="18" count="1" type="stmt"/>
+      <line num="19" count="1" type="stmt"/>
+      <line num="22" count="1" type="stmt"/>
+      <line num="28" count="0" type="stmt"/>
+      <line num="35" count="1" type="stmt"/>
+    </file>
+    <file name="Posts.tsx" path="C:\Users\Core\Desktop\Stage 3\RSSchool_Stage3\components\Posts.tsx">
+      <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+      <line num="2" count="1" type="stmt"/>
+      <line num="10" count="1" type="stmt"/>
+      <line num="11" count="1" type="stmt"/>
+      <line num="13" count="2" type="stmt"/>
+      <line num="22" count="1" type="stmt"/>
+    </file>
+  </project>
+</coverage>
