@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1700992125070" clover="3.2.0">
-  <project timestamp="1700992125070" name="All files">
+<coverage generated="1700992182680" clover="3.2.0">
+  <project timestamp="1700992182680" name="All files">
     <metrics statements="34" coveredstatements="33" conditionals="4" coveredconditionals="3" methods="12" coveredmethods="11" elements="50" coveredelements="47" complexity="0" loc="34" ncloc="34" packages="1" files="4" classes="4"/>
     <file name="Navigation.tsx" path="C:\Users\Core\Desktop\Stage 3\RSSchool_Stage3\components\Navigation.tsx">
       <metrics statements="8" coveredstatements="8" conditionals="2" coveredconditionals="1" methods="2" coveredmethods="2"/>

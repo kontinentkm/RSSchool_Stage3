@@ -10,10 +10,6 @@ import { useEffect, useState } from 'react';
 import { Post } from '@/types';
 import React from 'react';
 
-export const metadata: Metadata = {
-  title: 'Blog | Next App',
-};
-
 const PAGE_SIZE_OPTIONS = [5, 10, 20];
 
 export default function Blog() {
