@@ -1,3 +1,4 @@
+//layout.tsx
 import { NavLink, Outlet } from 'react-router-dom';
 
 const Layout = () => {

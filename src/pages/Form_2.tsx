@@ -1,3 +1,4 @@
+//Form_2.tsx
 import Form_2Comp from '../components/Form_2Comp';
 
 const Form_2 = () => {
