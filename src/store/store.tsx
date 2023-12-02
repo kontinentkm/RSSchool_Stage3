@@ -1,10 +1,16 @@
 // store.ts
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
-import rootReducer from './reducers'; // создайте этот файл на следующем шаге
+import rootReducer from './reducers';
+import firstFormReducer from './reducers/firstFormReducer';
+
+const combinedReducers = combineReducers({
+  form: rootReducer,
+  firstForm: firstFormReducer,
+});
 
 const store = configureStore({
-  reducer: rootReducer,
+  reducer: combinedReducers,
 });
 
 export type RootState = ReturnType<typeof store.getState>;
