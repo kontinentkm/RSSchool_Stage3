@@ -1,5 +1,8 @@
-//Form_2Comp.tsx
+// components/Form_2Comp.tsx
+import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useAppDispatch } from '../store/store';
+import { updateForm } from '../store/reducers/formReducer';
 
 type Inputs = {
   firstName: string;
@@ -13,7 +16,13 @@ type Inputs = {
   country: string;
 };
 
-export default function App() {
+interface Form_2CompProps {
+  formState?: Inputs;
+}
+
+const Form_2Comp: React.FC<Form_2CompProps> = ({ formState = {} }) => {
+  const dispatch = useAppDispatch();
+
   const {
     register,
     formState: { errors },
@@ -21,8 +30,25 @@ export default function App() {
     reset,
     watch,
   } = useForm<Inputs>({
-    mode: 'onChange',
+    mode: 'onBlur',
   });
+
+  const firstNameValue = watch('firstName', formState.firstName);
+  const ageValue = watch('age', formState.age);
+  const mailValue = watch('mail', formState.mail);
+  const passwordValue = watch('password', formState.password);
+  const confirmPasswordValue = watch(
+    'confirm_password',
+    formState.confirm_password
+  );
+  const genderValue = watch('gender', formState.gender);
+  const countryValue = watch('country', formState.country);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    dispatch(updateForm({ [e.target.name]: e.target.value }));
+  };
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log(data);
@@ -44,6 +70,8 @@ export default function App() {
             message: 'Minimum 2 characters',
           },
         })}
+        defaultValue={firstNameValue}
+        onChange={handleChange}
       />
       {errors.firstName && (
         <p role="alert">{errors.firstName.message || 'Error'}</p>
@@ -66,6 +94,8 @@ export default function App() {
             message: 'You must not be older than 99',
           },
         })}
+        defaultValue={ageValue}
+        onChange={handleChange}
       />
       {errors.age && <p role="alert">{errors.age.message || 'Error'}</p>}
 
@@ -83,6 +113,8 @@ export default function App() {
             message: 'Minimum 2 characters',
           },
         })}
+        defaultValue={mailValue}
+        onChange={handleChange}
       />
       {errors.mail && <p role="alert">{errors.mail.message || 'Error'}</p>}
 
@@ -96,6 +128,8 @@ export default function App() {
               'Use English language. Password must contain: 1 number, 1 uppercased letter, 1 lowercased letter, 1 special character',
           },
         })}
+        defaultValue={passwordValue}
+        onChange={handleChange}
       />
       {errors.password && (
         <p role="alert">{errors.password.message || 'Error'}</p>
@@ -106,11 +140,13 @@ export default function App() {
         {...register('confirm_password', {
           required: 'To confirm password is required',
           validate: (val: string) => {
-            if (watch('password') != val) {
-              return 'Your passwords do no match';
+            if (watch('password') !== val) {
+              return 'Your passwords do not match';
             }
           },
         })}
+        defaultValue={confirmPasswordValue}
+        onChange={handleChange}
       />
       {errors.confirm_password && (
         <p role="alert">{errors.confirm_password.message || 'Error'}</p>
@@ -121,6 +157,8 @@ export default function App() {
         {...register('gender', {
           required: 'To choose gender is required',
         })}
+        value={genderValue}
+        onChange={handleChange}
       >
         <option value="">Select gender...</option>
         <option value="Man">Man</option>
@@ -135,6 +173,7 @@ export default function App() {
         })}
         type="checkbox"
         value="Confirmed"
+        onChange={handleChange}
       />
       {errors.TandC && <p role="alert">{errors.TandC.message || 'Error'}</p>}
 
@@ -142,8 +181,9 @@ export default function App() {
       <input
         type="file"
         {...register('upload_picture', {
-          required: 'To uploade picture is required',
+          required: 'To upload picture is required',
         })}
+        onChange={handleChange}
       />
       {errors.upload_picture && (
         <p role="alert">{errors.upload_picture.message || 'Error'}</p>
@@ -154,6 +194,8 @@ export default function App() {
         {...register('country', {
           required: 'To choose country is required',
         })}
+        value={countryValue}
+        onChange={handleChange}
       >
         <option value="">Select country...</option>
         <option value="Belarus">Belarus</option>
@@ -167,4 +209,6 @@ export default function App() {
       <input type="submit" />
     </form>
   );
-}
+};
+
+export default Form_2Comp;

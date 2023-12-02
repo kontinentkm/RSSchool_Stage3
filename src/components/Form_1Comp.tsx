@@ -1,10 +1,6 @@
 //Form_1Comp.tsx
-import React from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { useAppDispatch } from '../store/store';
-import { updateFirstForm } from '../store/reducers/firstFormReducer';
+import React, { useState } from 'react';
 import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { FirstFormState } from '../store/reducers/firstFormReducer';
 
 const schema = yup.object().shape({
@@ -41,110 +37,151 @@ const schema = yup.object().shape({
   country: yup.string().required('To choose country is required'),
 });
 
-type Inputs = {
-  firstName: string;
-  age: number;
-  mail: string;
-  password: string;
-  confirm_password: string;
-  gender: string;
-  TandC: string;
-  upload_picture: string;
-  country: string;
-};
-
 interface Form_1CompProps {
   formState?: FirstFormState;
 }
 
+interface FormErrors {
+  firstName?: string;
+  age?: string;
+  mail?: string;
+  password?: string;
+  confirm_password?: string;
+  gender?: string;
+  TandC?: string;
+  upload_picture?: string;
+  country?: string;
+}
+
 const Form_1Comp: React.FC<Form_1CompProps> = ({ formState = {} }) => {
-  const dispatch = useAppDispatch();
-  const {
-    handleSubmit,
-    register,
-    setValue,
-    formState: { errors },
-  } = useForm<Inputs>({
-    defaultValues: formState,
-    resolver: yupResolver(schema),
-  });
+  const [formData, setFormData] = useState<Partial<FirstFormState>>(formState);
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [isChecked, setIsChecked] = useState<boolean>(!!formData.TandC);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    const { name, value } = e.target;
-    const formData: Partial<FirstFormState> = {
-      [name as keyof FirstFormState]: value,
-    };
+    const { name, value, type } = e.target;
 
-    dispatch(updateFirstForm(formData));
+    if (type === 'checkbox') {
+      const isChecked = (e.target as HTMLInputElement).checked;
+      setIsChecked(isChecked);
+    }
 
-    setValue(name as keyof FirstFormState, value);
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log(data);
+  const onSubmit = async () => {
+    try {
+      await schema.validate(formData, { abortEarly: false });
+      console.log(formData);
+    } catch (validationErrors) {
+      if (validationErrors instanceof yup.ValidationError) {
+        const newErrors: FormErrors = {};
+        if (validationErrors.inner) {
+          validationErrors.inner.forEach((error) => {
+            newErrors[error.path as keyof FormErrors] = error.message;
+          });
+        }
+        setErrors(newErrors);
+      }
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={onSubmit}>
       <label>First Name</label>
-      <input {...register('firstName')} onChange={handleChange} required />
-      {errors.firstName && <p role="alert">{errors.firstName.message}</p>}
+      <input
+        name="firstName"
+        onChange={handleChange}
+        value={formData.firstName || ''}
+        required
+      />
+      {errors.firstName && <p role="alert">{errors.firstName}</p>}
 
       <label>Age</label>
-      <input {...register('age')} onChange={handleChange} required />
-      {errors.age && <p role="alert">{errors.age.message}</p>}
+      <input
+        name="age"
+        onChange={handleChange}
+        value={formData.age || ''}
+        required
+      />
+      {errors.age && <p role="alert">{errors.age}</p>}
 
       <label>Email</label>
-      <input {...register('mail')} onChange={handleChange} required />
-      {errors.mail && <p role="alert">{errors.mail.message}</p>}
+      <input
+        name="mail"
+        onChange={handleChange}
+        value={formData.mail || ''}
+        required
+      />
+      {errors.mail && <p role="alert">{errors.mail}</p>}
 
       <label>Password</label>
-      <input {...register('password')} onChange={handleChange} required />
-      {errors.password && <p role="alert">{errors.password.message}</p>}
+      <input
+        name="password"
+        type="password"
+        onChange={handleChange}
+        value={formData.password || ''}
+        required
+      />
+      {errors.password && <p role="alert">{errors.password}</p>}
 
       <label>Confirm Password</label>
       <input
-        {...register('confirm_password')}
+        name="confirm_password"
+        type="password"
         onChange={handleChange}
+        value={formData.confirm_password || ''}
         required
       />
-      {errors.confirm_password && (
-        <p role="alert">{errors.confirm_password.message}</p>
-      )}
+      {errors.confirm_password && <p role="alert">{errors.confirm_password}</p>}
 
       <label>Gender</label>
-      <select {...register('gender')} onChange={handleChange} required>
+      <select
+        name="gender"
+        onChange={handleChange}
+        value={formData.gender || ''}
+        required
+      >
         <option value="">Select gender...</option>
         <option value="Man">Man</option>
         <option value="Woman">Woman</option>
       </select>
-      {errors.gender && <p role="alert">{errors.gender.message}</p>}
+      {errors.gender && <p role="alert">{errors.gender}</p>}
 
       <label>Accept T&C</label>
       <input
+        name="TandC"
         type="checkbox"
-        {...register('TandC')}
+        onChange={handleChange}
+        checked={isChecked}
+        required
+      />
+      {errors.TandC && <p role="alert">{errors.TandC}</p>}
+
+      <label>Upload picture</label>
+      <input
+        name="upload_picture"
+        type="file"
         onChange={handleChange}
         required
       />
-      {errors.TandC && <p role="alert">{errors.TandC.message}</p>}
-
-      <label>Upload picture</label>
-      <input {...register('upload_picture')} onChange={handleChange} required />
-      {errors.upload_picture && (
-        <p role="alert">{errors.upload_picture.message}</p>
-      )}
+      {errors.upload_picture && <p role="alert">{errors.upload_picture}</p>}
 
       <label>Country</label>
-      <select {...register('country')} onChange={handleChange} required>
+      <select
+        name="country"
+        onChange={handleChange}
+        value={formData.country || ''}
+        required
+      >
         <option value="">Select country...</option>
         <option value="Belarus">Belarus</option>
         <option value="Russia">Russia</option>
         <option value="USA">USA</option>
       </select>
-      {errors.country && <p role="alert">{errors.country.message}</p>}
+      {errors.country && <p role="alert">{errors.country}</p>}
 
       <input type="submit" value="Submit" />
     </form>
